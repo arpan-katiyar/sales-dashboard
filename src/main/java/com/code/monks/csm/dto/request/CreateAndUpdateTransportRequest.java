@@ -1,0 +1,30 @@
+package com.code.monks.csm.dto.request;
+
+import com.code.monks.csm.enums.StatusEnum;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class CreateAndUpdateTransportRequest {
+
+    @NotBlank(message = "Transport name is required")
+    private String name;
+
+    private String email;
+
+    private String gstNo;
+
+    private List<TransportContactRequestDto> contacts;
+
+    private String state;
+    private String city;
+    private String pincode;
+
+    private String addressLine1;
+    private String addressLine2;
+    private StatusEnum status;
+}
