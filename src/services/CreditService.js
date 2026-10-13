@@ -1,0 +1,61 @@
+import api from "../api/api";
+import { checkLogicalError, handleApiError } from "../utils/errorHandler";
+
+export const addCreditEntry = async (formData) => {
+  try {
+    const response = await api.post(`/credit/entry/add`, formData);
+    const result = checkLogicalError(response.data);
+    return result;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+export const searchCreditHistory = async (
+  filterObject,
+  page,
+  rowsPerPage
+) => {
+  const { fromDate, toDate, supplierId, customerId } = filterObject;
+  try {
+    const response = await api.get(`/credit/entries/search`, {
+      params: {
+        fromDate,
+        toDate,
+        supplierId: supplierId ?? null,
+        customerId: customerId ?? null,
+        page,
+        size: rowsPerPage,
+      },
+    });
+    const result = checkLogicalError(response.data);
+    return result;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+export const updateCreditApi = async (id, updates) => {
+  try {
+    const response = await api.patch(
+      `/credit/entry/update/${id}`,
+      updates
+    );
+    const result = checkLogicalError(response.data);
+    return result;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+export const deleteCreditApi = async (id) => {
+  try {
+    const response = api.delete(`/credit/entry/delete/${id}`);
+    const result = checkLogicalError(response.data);
+    return result;
+  }
+  catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+

@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* index.css or App.css */
+input[type="date"]::-webkit-datetime-edit {
+  color: transparent;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit,
+input[type="date"]:valid::-webkit-datetime-edit {
+  color: black;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+select {
+  -webkit-appearance: none; /* Safari */
+  -moz-appearance: none;
+  appearance: none;
+  background-color: white;
+}
+
+/* Neutralize Chrome/Edge autofill paint for native and MUI inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #111827;
+  caret-color: #111827;
+  box-shadow: 0 0 0 1000px #fff inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+
