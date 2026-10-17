@@ -1,17 +1,19 @@
-// src/routes/PrivateRoute.jsx
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const PrivateRoute = ({ requiredRoles }) => {
-  const token = localStorage.getItem("token");
-  console.log("token",!token)
-  const roles = JSON.parse(localStorage.getItem("roles")); 
+  const { auth, status } = useAuth();
 
-  if (token=="undefined" || token == null) {
-   return <Navigate to="/" replace />;
+  if (status === "checking") {
+    return <div className="p-4 text-gray-500">Loading...</div>;
   }
 
-  // Optional: role-based access
-  if (requiredRoles && !requiredRoles.some(role => user?.roles?.includes(role))) {
+  if (!auth?.userId) {
+    return <Navigate to="/" replace />;
+  }
+
+  const roles = Array.isArray(auth.role) ? auth.role : [];
+  if (requiredRoles && !requiredRoles.some((role) => roles.includes(role))) {
     return <div>Unauthorized</div>;
   }
 

@@ -28,13 +28,18 @@ const Login = () => {
       const data = await loginUser(email, password);
       console.log("auth", auth);
       login({
-        token: data.token,
-        role: data.roles,
+        roles: data.roles,
         userId: data.userId,
         username: data.username,
+        passwordChangeRequired: data.passwordChangeRequired,
       });
 
-      showSnackbar("Login successful!", "success");
+      showSnackbar(
+        data.passwordChangeRequired
+          ? "Login successful. Please change your password."
+          : "Login successful!",
+        "success",
+      );
       navigate("/suppliers", { replace: true });
     } catch (err) {
       console.error("Login error:", err);

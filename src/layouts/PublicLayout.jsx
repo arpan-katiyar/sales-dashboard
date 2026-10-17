@@ -1,10 +1,16 @@
 import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const PublicLayout = () => {
-  const token = localStorage.getItem("token");
+  const { auth, status } = useAuth();
   const lastRoute = localStorage.getItem("lastRoute");
-  if (token) {
+
+  if (status === "checking") {
+    return <div className="p-4 text-gray-500">Loading...</div>;
+  }
+
+  if (auth?.userId) {
     return (
       <Navigate
         to={lastRoute && lastRoute !== "/" ? lastRoute : "/suppliers"}
@@ -12,6 +18,7 @@ const PublicLayout = () => {
       />
     );
   }
+
   return (
     <Suspense fallback={<div className="p-4 text-gray-500">Loading...</div>}>
       <Outlet />
