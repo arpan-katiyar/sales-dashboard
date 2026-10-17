@@ -7,7 +7,7 @@ const ConfigContext = createContext();
 export const ConfigProvider = ({ children }) => {
   const [config, setConfig] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { auth } = useAuth();
+  const { auth, status } = useAuth();
   console.log("auth",auth)
 
   const fetchConfig = async () => {
@@ -23,12 +23,16 @@ export const ConfigProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (auth?.token) {
+    if (status === "checking") {
+      return;
+    }
+    if (auth?.userId) {
       fetchConfig();
     } else {
       setConfig(null);
+      setLoading(false);
     }
-  }, [auth?.token]);
+  }, [auth?.userId, status]);
 
   return (
     <ConfigContext.Provider

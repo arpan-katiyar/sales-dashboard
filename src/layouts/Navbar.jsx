@@ -25,10 +25,11 @@ export default function Navbar({
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const mainActiveSection = activeSection;
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
 
-  const handleLogout = () => {
-    localStorage.clear();
+  const handleLogout = async () => {
+    setShowLogoutModal(false);
+    await logout();
     navigate("/");
   };
 
